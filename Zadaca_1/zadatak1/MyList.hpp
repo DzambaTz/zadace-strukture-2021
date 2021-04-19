@@ -364,6 +364,6 @@ public:
 
         connectNodes(pos.prev_, pos.curr_); // Otpajamo Node-ove na poziciji insertiranja
         connectNodes(pos.prev_, newNode);   // Spajamo prethodni Node na novi
-        connectNodes(newNode, pos.curr_);   // Spajamo novi Node na prethodni
+        connectNodes(newNode, pos.curr_);   // Spajamo novi Node na sljedeci
     }
 };
