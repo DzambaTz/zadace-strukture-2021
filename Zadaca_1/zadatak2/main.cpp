@@ -9,7 +9,8 @@ int main()
     std::cout << "Welcome to DNA storage. Please enter one of the following options:" << std::endl;
     std::cout << "\t1. Print" << std::endl;
     std::cout << "\t2. Insert <pos> <lanac>" << std::endl;
-    std::cout << "\t3. Remove <pos> <len>" << std::endl;
+    std::cout << "\t3. Remove <pos> <len>" << std::endl
+              << std::endl;
 
     int choice;
     while (true)
@@ -30,7 +31,8 @@ int main()
             {
                 std::cout << x;
             }
-            std::cout << std::endl;
+            std::cout << std::endl
+                      << std::endl;
             continue;
         }
 
@@ -64,6 +66,7 @@ int main()
                 std::cout << "The chain you entered contains invalid characters!" << std::endl;
                 continue;
             }
+            std::cout << std::endl;
             continue;
         }
 
@@ -105,6 +108,7 @@ int main()
             }
 
             storage.erase(first, last);
+            std::cout << std::endl;
         }
     }
 
