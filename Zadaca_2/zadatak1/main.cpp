@@ -116,9 +116,7 @@ int main()
     std::cout << "\tSize of stack: " << stack.size() << std::endl;
     std::cout << std::endl;
 
-    List_stack<int> stack2;
-
-    stack2 = stack;
+    List_stack<int> stack2 = stack;
 
     std::cout << "\tStack 1: " << stack << std::endl;
     std::cout << "\tTop of stack1: " << stack.top() << std::endl;

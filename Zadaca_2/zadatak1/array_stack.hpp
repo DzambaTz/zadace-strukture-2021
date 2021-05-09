@@ -238,9 +238,9 @@ Array_stack<T> Array_stack<T>::operator+(const Array_stack<T> &other)
         new_stack.push(array[i]);
     }
 
-    for (size_t i = size_; i < other.size_ + size_; ++i)
+    for (size_t i = 0; i < other.size_; ++i)
     {
-        new_stack.push(other.array[i - size_]);
+        new_stack.push(other.array[i]);
     }
 
     return new_stack;

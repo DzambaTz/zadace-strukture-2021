@@ -13,12 +13,6 @@ private:
         Node *next_;
         T data_;
         Node() : next_(nullptr) {}
-        Node(const Node *const other) : next_(other->next_), data_(other->data_) {}
-        void operator=(const Node *const other)
-        {
-            data_ = other->data_;
-            next_ = other->next_;
-        }
         Node(const T &val, Node *const next) : next_(next), data_(val) {}
         Node(T &&val, Node *const next) : next_(next), data_(std::move(val)) {}
     };
@@ -65,12 +59,17 @@ public:
 template <typename T>
 List_stack<T>::List_stack(const List_stack<T> &other)
 {
-    Node *tmp = other.top_->next_;
-    for (size_t i = 0; i < other.size_; ++i)
+    Node *tmp1 = other.top_->next_;
+    top_ = new Node(other.top_->data_, nullptr);
+    Node *tmp2 = top_;
+
+    for (size_t i = 0; i < other.size_ - 1; ++i)
     {
-        push(tmp->data_);
-        tmp = tmp->next_;
+        tmp2->next_ = new Node(tmp1->data_, nullptr);
+        tmp2 = tmp2->next_;
+        tmp1 = tmp1->next_;
     }
+
     size_ = other.size_;
 }
 
