@@ -21,7 +21,7 @@ private:
     size_t size_;
 
 public:
-    //Konstruktori i operatori dodjeljivanja
+    //Constructors and assignment operators
     List_stack() : top_(nullptr), size_(0) {}
     List_stack(Node *top, size_t size) : top_(top), size_(size) {}
     List_stack(const List_stack &);
@@ -30,7 +30,7 @@ public:
     List_stack &operator=(List_stack &&);
     ~List_stack();
 
-    //Metode
+    //Methods
     void push(const T &val);
     void push(T &&val);
     T &top();
@@ -39,8 +39,9 @@ public:
     inline size_t size() const { return size_; };
     inline bool empty() const { return size_ ? false : true; };
 
-    //Ostali operatori
+    //Other operators
     template <typename Type>
+    //Overload for the << (left shift) operator so we can print the stack easier
     friend inline std::ostream &operator<<(std::ostream &s, const List_stack<Type> &stack)
     {
         Node *tmp = stack.top_;
@@ -56,6 +57,7 @@ public:
     List_stack operator+(const List_stack &);
 };
 
+//Copy constructor
 template <typename T>
 List_stack<T>::List_stack(const List_stack<T> &other)
 {
@@ -73,6 +75,7 @@ List_stack<T>::List_stack(const List_stack<T> &other)
     size_ = other.size_;
 }
 
+//Move constructor
 template <typename T>
 List_stack<T>::List_stack(List_stack<T> &&other)
 {
@@ -82,6 +85,7 @@ List_stack<T>::List_stack(List_stack<T> &&other)
     other.size_ = 0;
 }
 
+//Copy assignment operator
 template <typename T>
 List_stack<T> &List_stack<T>::operator=(const List_stack<T> &other)
 {
@@ -105,6 +109,7 @@ List_stack<T> &List_stack<T>::operator=(const List_stack<T> &other)
     return *this;
 }
 
+//Move assignment operator
 template <typename T>
 List_stack<T> &List_stack<T>::operator=(List_stack<T> &&other)
 {
@@ -119,6 +124,7 @@ List_stack<T> &List_stack<T>::operator=(List_stack<T> &&other)
     return *this;
 }
 
+//Destructor
 template <typename T>
 List_stack<T>::~List_stack()
 {
@@ -128,6 +134,7 @@ List_stack<T>::~List_stack()
     }
 }
 
+//Pushes (by copy) a value to the top of the stack
 template <typename T>
 void inline List_stack<T>::push(const T &val)
 {
@@ -135,6 +142,7 @@ void inline List_stack<T>::push(const T &val)
     ++size_;
 }
 
+//Moves the specified value to the top of the stack
 template <typename T>
 void inline List_stack<T>::push(T &&val)
 {
@@ -142,6 +150,7 @@ void inline List_stack<T>::push(T &&val)
     ++size_;
 }
 
+//Returns the top element of the stack
 template <typename T>
 T &List_stack<T>::top()
 {
@@ -155,6 +164,7 @@ T &List_stack<T>::top()
     }
 }
 
+//Same top method but for cases when the top object is const
 template <typename T>
 const T &List_stack<T>::top() const
 {
@@ -168,6 +178,7 @@ const T &List_stack<T>::top() const
     }
 }
 
+//Pops (removes) the top element (deletes the top node)
 template <typename T>
 void List_stack<T>::pop()
 {
@@ -181,6 +192,8 @@ void List_stack<T>::pop()
     }
 }
 
+//Operator == that compares two stacks, and returns true if they are
+//equal in size and they have the same elements
 template <typename T>
 bool List_stack<T>::operator==(const List_stack<T> &other)
 {
@@ -204,6 +217,8 @@ bool List_stack<T>::operator==(const List_stack<T> &other)
     return true;
 }
 
+//Operator + that enables addition of the stacks.
+//The two stacks (operands) get copied to a new (third) stack.
 template <typename T>
 List_stack<T> List_stack<T>::operator+(const List_stack<T> &other)
 {

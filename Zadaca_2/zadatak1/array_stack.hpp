@@ -12,7 +12,7 @@ private:
     T *array;
 
 public:
-    //Konstruktori i operatori dodjeljivanja
+    //Constructors and assignment operators
     Array_stack() : capacity_(0), top_index_(0), size_(0), array(nullptr) {}
     Array_stack(const Array_stack &);
     Array_stack(Array_stack &&);
@@ -20,7 +20,7 @@ public:
     Array_stack &operator=(Array_stack &&);
     ~Array_stack() { delete[] array; }
 
-    //Metode
+    //Methods
     void push(const T &val);
     void push(T &&val);
     T &top();
@@ -29,7 +29,7 @@ public:
     size_t size() const;
     bool empty() const;
 
-    //Ostali operatori
+    //Other operators
     template <typename Type>
     friend inline std::ostream &operator<<(std::ostream &, const Array_stack<Type> &);
     bool operator==(const Array_stack &);
@@ -37,6 +37,7 @@ public:
     Array_stack operator+(const Array_stack &);
 };
 
+//Copy constructor
 template <typename T>
 Array_stack<T>::Array_stack(const Array_stack<T> &other)
     : capacity_(other.size_), top_index_(other.top_index_), size_(other.size_)
@@ -48,6 +49,7 @@ Array_stack<T>::Array_stack(const Array_stack<T> &other)
     }
 }
 
+//Move constructor
 template <typename T>
 Array_stack<T>::Array_stack(Array_stack<T> &&other)
     : capacity_(other.size_), top_index_(other.top_index_), size_(other.size_)
@@ -59,6 +61,7 @@ Array_stack<T>::Array_stack(Array_stack<T> &&other)
     other.top_index_ = 0;
 }
 
+//Copy assignment operator
 template <typename T>
 Array_stack<T> &Array_stack<T>::operator=(const Array_stack<T> &other)
 {
@@ -76,6 +79,7 @@ Array_stack<T> &Array_stack<T>::operator=(const Array_stack<T> &other)
     return *this;
 }
 
+//Move assignment operator
 template <typename T>
 Array_stack<T> &Array_stack<T>::operator=(Array_stack<T> &&other)
 {
@@ -92,6 +96,7 @@ Array_stack<T> &Array_stack<T>::operator=(Array_stack<T> &&other)
     return *this;
 }
 
+//Pushes (by copy) a value to the top of the stack
 template <typename T>
 void Array_stack<T>::push(const T &val)
 {
@@ -122,6 +127,7 @@ void Array_stack<T>::push(const T &val)
     }
 }
 
+//Moves the specified value to the top of the stack
 template <typename T>
 void Array_stack<T>::push(T &&val)
 {
@@ -152,6 +158,7 @@ void Array_stack<T>::push(T &&val)
     }
 }
 
+//Returns the top element of the stack
 template <typename T>
 T &Array_stack<T>::top()
 {
@@ -165,6 +172,7 @@ T &Array_stack<T>::top()
     }
 }
 
+//Same top method but for cases when the top object is const
 template <typename T>
 const T &Array_stack<T>::top() const
 {
@@ -178,6 +186,7 @@ const T &Array_stack<T>::top() const
     }
 }
 
+//Pops (removes) the top element (doesn't delete the top element just shrinks the readable range)
 template <typename T>
 void Array_stack<T>::pop()
 {
@@ -188,18 +197,21 @@ void Array_stack<T>::pop()
     }
 }
 
+//Returns the number of elements on the stack
 template <typename T>
 size_t Array_stack<T>::size() const
 {
     return size_;
 }
 
+//Returns true if the stack is empty and vice versa
 template <typename T>
 bool Array_stack<T>::empty() const
 {
     return size_ ? false : true;
 }
 
+//Overload for the << (left shift) operator so we can print the stack easier
 template <typename T>
 std::ostream &operator<<(std::ostream &s, const Array_stack<T> &stack)
 {
@@ -210,6 +222,8 @@ std::ostream &operator<<(std::ostream &s, const Array_stack<T> &stack)
     return s;
 }
 
+//Operator == that compares two stacks, and returns true if they are
+//equal in size and they have the same elements
 template <typename T>
 bool Array_stack<T>::operator==(const Array_stack<T> &other)
 {
@@ -229,6 +243,8 @@ bool Array_stack<T>::operator==(const Array_stack<T> &other)
     return true;
 }
 
+//Operator + that enables addition of the stacks.
+//The two stacks (operands) get copied to a new (third) stack.
 template <typename T>
 Array_stack<T> Array_stack<T>::operator+(const Array_stack<T> &other)
 {
@@ -243,5 +259,6 @@ Array_stack<T> Array_stack<T>::operator+(const Array_stack<T> &other)
         new_stack.push(other.array[i]);
     }
 
+    //std::move(new_stack) is optional and shows no change in performance with -O2 enabled
     return new_stack;
 }
